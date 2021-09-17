@@ -10,3 +10,7 @@
 .selected {
     background-color: grey;
 }
+
+li {
+    cursor: pointer;
+}
