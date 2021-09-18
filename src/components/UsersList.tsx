@@ -6,16 +6,19 @@ type UsersListPropsType = {
     term: string
     selectedUser: SearchUserType | null
     onUserSelect: (user: SearchUserType) => void
+    setPreloader: (value: boolean) => void
 }
 export const UsersList = (props: UsersListPropsType) => {
 
     const [users, setUsers] = useState<Array<SearchUserType>>([]);
 
     useEffect(() => {
+        props.setPreloader(true)
         axios
             .get<SearchResult>(`https://api.github.com/search/users?q=${props.term}`)
             .then(res => {
-                setUsers(res.data.items)
+                setUsers(res.data.items);
+                props.setPreloader(false)
             })
     }, [props.term])
 

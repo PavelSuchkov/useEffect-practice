@@ -5,6 +5,7 @@ import {SearchUserType, UserType} from "./GitHub";
 
 type UserDetailsPropsType = {
     user: SearchUserType | null
+    setPreloader: (value: boolean) => void
 }
 export const UserDetails = (props: UserDetailsPropsType) => {
 
@@ -13,12 +14,13 @@ export const UserDetails = (props: UserDetailsPropsType) => {
 
     useEffect(() => {
         if (!!props.user) {
+            props.setPreloader(true)
             axios
                 .get<UserType>(`https://api.github.com/users/${props.user.login}`)
                 .then(res => {
-                    setSeconds(60)
+                    setSeconds(60);
                     setUserDetails(res.data);
-
+                    props.setPreloader(false);
                 })
         }
         console.log(userDetails)
